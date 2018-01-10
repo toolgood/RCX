@@ -3,8 +3,8 @@
 RCX算法基于RC4算法改进，性能相差不太。
 
 The RCX algorithm is improved based on the RC4 algorithm, and performance is almost the same.
-
-### RCX算法与RC4算法比较 （Comparison between RCX algorithm and RC4 algorithm ）
+ 
+#### RCX算法与RC4算法比较 （Comparison between RCX algorithm and RC4 algorithm ）
 密钥(secret key)：ToolGood  输出数据类型(output data type)：Base64_Url
 ```` csharp
 RC4('ABCDDDDDDDDDDDDDDDDDDDDDD') => O8AF0I3sAzyQaTO78S9irZwDfemUR4eGsw
@@ -34,7 +34,7 @@ RCX('1234567800034567891234567') => SwoWZFa8uiJuQXjGVkKaspQseRHK9qtVZA
 
 From the above code, you can clearly see the shortcomings of RC4 algorithm encryption,But the data is encrypted by the RCX algorithm and becomes disordered. 
 
-#### 核心代码
+#### 核心代码（Core code ）
 RCX算法采用[明文]与[密文]对密码盘进行调换，并且对 j 进行修改: j=j+[明文]+[密文] 。
 
 The RCX algorithm uses [plain text] and [ciphertext] to swap the cipher disk, and modify j: j = j + [plain text] + [ciphertext].
