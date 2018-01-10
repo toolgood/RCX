@@ -1,0 +1,5 @@
+F:\git\RCX\ToolGood.RcxTest\ToolGood.RcxTest\bin\Release\ToolGood.RcxTest.exe
+F:\git\RCX\ToolGood.RcxTest\ToolGood.RcxTest\bin\Release\ToolGood.RcxTest.pdb
+F:\git\RCX\ToolGood.RcxTest\ToolGood.RcxTest\obj\Release\ToolGood.RcxTest.csproj.CoreCompileInputs.cache
+F:\git\RCX\ToolGood.RcxTest\ToolGood.RcxTest\obj\Release\ToolGood.RcxTest.exe
+F:\git\RCX\ToolGood.RcxTest\ToolGood.RcxTest\obj\Release\ToolGood.RcxTest.pdb
