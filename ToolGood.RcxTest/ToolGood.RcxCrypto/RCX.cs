@@ -191,7 +191,7 @@ namespace ToolGood.RcxCrypto
             if (pass == null) throw new ArgumentNullException("pass");
             return encrypt(data, pass);
         }
-        public static byte[] encrypt(byte[] data, byte[] pass)
+        private static byte[] encrypt(byte[] data, byte[] pass)
         {
             byte[] mBox = GetKey(pass, keyLen);
             byte[] output = new byte[data.Length];
