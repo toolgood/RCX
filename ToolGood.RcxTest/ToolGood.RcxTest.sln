@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolGood.RcxTest", "ToolGood.RcxTest\ToolGood.RcxTest.csproj", "{A9FA6B65-1B0D-48D4-9F84-2CF90BAED969}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToolGood.RcxCrypto", "ToolGood.RcxCrypto\ToolGood.RcxCrypto.csproj", "{56CF007A-8379-420F-815F-CB3D92818429}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A9FA6B65-1B0D-48D4-9F84-2CF90BAED969}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9FA6B65-1B0D-48D4-9F84-2CF90BAED969}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9FA6B65-1B0D-48D4-9F84-2CF90BAED969}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56CF007A-8379-420F-815F-CB3D92818429}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56CF007A-8379-420F-815F-CB3D92818429}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56CF007A-8379-420F-815F-CB3D92818429}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56CF007A-8379-420F-815F-CB3D92818429}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
