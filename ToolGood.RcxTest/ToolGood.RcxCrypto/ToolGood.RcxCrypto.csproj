@@ -24,8 +24,8 @@
     <RootNamespace>ToolGood.RcxCrypto</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <FileVersion>1.0.0.0</FileVersion>
-    <Version>1.0.0.0</Version>
+    <FileVersion>1.0.0.1</FileVersion>
+    <Version>1.0.0.1</Version>
     <PackageReleaseNotes></PackageReleaseNotes>
     <DelaySign>false</DelaySign>
   </PropertyGroup>

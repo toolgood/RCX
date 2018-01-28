@@ -23,6 +23,7 @@ namespace ToolGood.RcxCrypto
 
         public RCX(string pass)
         {
+            if (string.IsNullOrEmpty(pass)) throw new ArgumentNullException("pass");
             var ps = Encoding.UTF8.GetBytes(pass);
             encoding = Encoding.UTF8;
             keybox = GetKey(ps, keyLen);
@@ -30,6 +31,7 @@ namespace ToolGood.RcxCrypto
 
         public RCX(string pass, Encoding encoding)
         {
+            if (string.IsNullOrEmpty(pass)) throw new ArgumentNullException("pass");
             var ps = encoding.GetBytes(pass);
             this.encoding = encoding;
             keybox = GetKey(ps, keyLen);
@@ -42,7 +44,8 @@ namespace ToolGood.RcxCrypto
         /// <returns></returns>
         public byte[] Encrypt(string data)
         {
-            return Encrypt(encoding.GetBytes(data));
+            if (string.IsNullOrEmpty(data)) throw new ArgumentNullException("data");
+            return encrypt(encoding.GetBytes(data));
         }
         /// <summary>
         /// Encrypt
@@ -52,7 +55,8 @@ namespace ToolGood.RcxCrypto
         /// <returns></returns>
         public byte[] Encrypt(string data, Encoding encoding)
         {
-            return Encrypt(encoding.GetBytes(data));
+            if (string.IsNullOrEmpty(data)) throw new ArgumentNullException("data");
+            return encrypt(encoding.GetBytes(data));
         }
         /// <summary>
         /// Encrypt
@@ -62,6 +66,11 @@ namespace ToolGood.RcxCrypto
         public byte[] Encrypt(byte[] data)
         {
             if (data == null) throw new ArgumentNullException("data");
+            if (data.Length == 0) throw new ArgumentNullException("data");
+            return encrypt(data);
+        }
+        private byte[] encrypt(byte[] data)
+        {
 
             byte[] mBox = new byte[keyLen];
             Array.Copy(keybox, mBox, keyLen);
@@ -95,10 +104,10 @@ namespace ToolGood.RcxCrypto
         /// <returns></returns>
         public static byte[] Encrypt(string data, string pass, Encoding encoding)
         {
-            if (data == null) throw new ArgumentNullException("data");
-            if (pass == null) throw new ArgumentNullException("pass");
+            if (string.IsNullOrEmpty(data)) throw new ArgumentNullException("data");
+            if (string.IsNullOrEmpty(pass)) throw new ArgumentNullException("pass");
 
-            return Encrypt(encoding.GetBytes(data), encoding.GetBytes(pass));
+            return encrypt(encoding.GetBytes(data), encoding.GetBytes(pass));
         }
         /// <summary>
         /// Encrypt
@@ -108,10 +117,10 @@ namespace ToolGood.RcxCrypto
         /// <returns></returns>
         public static byte[] Encrypt(string data, string pass)
         {
-            if (data == null) throw new ArgumentNullException("data");
-            if (pass == null) throw new ArgumentNullException("pass");
+            if (string.IsNullOrEmpty(data)) throw new ArgumentNullException("data");
+            if (string.IsNullOrEmpty(pass)) throw new ArgumentNullException("pass");
 
-            return Encrypt(Encoding.UTF8.GetBytes(data), Encoding.UTF8.GetBytes(pass));
+            return encrypt(Encoding.UTF8.GetBytes(data), Encoding.UTF8.GetBytes(pass));
         }
         /// <summary>
         /// Encrypt
@@ -122,9 +131,10 @@ namespace ToolGood.RcxCrypto
         public static byte[] Encrypt(byte[] data, string pass, Encoding encoding)
         {
             if (data == null) throw new ArgumentNullException("data");
-            if (pass == null) throw new ArgumentNullException("pass");
+            if (data.Length == 0) throw new ArgumentNullException("data");
+            if (string.IsNullOrEmpty(pass)) throw new ArgumentNullException("pass");
 
-            return Encrypt(data, encoding.GetBytes(pass));
+            return encrypt(data, encoding.GetBytes(pass));
         }
         /// <summary>
         /// Encrypt
@@ -135,9 +145,10 @@ namespace ToolGood.RcxCrypto
         public static byte[] Encrypt(byte[] data, string pass)
         {
             if (data == null) throw new ArgumentNullException("data");
-            if (pass == null) throw new ArgumentNullException("pass");
+            if (data.Length == 0) throw new ArgumentNullException("data");
+            if (string.IsNullOrEmpty(pass)) throw new ArgumentNullException("pass");
 
-            return Encrypt(data, Encoding.UTF8.GetBytes(pass));
+            return encrypt(data, Encoding.UTF8.GetBytes(pass));
         }
         /// <summary>
         /// Encrypt
@@ -147,10 +158,11 @@ namespace ToolGood.RcxCrypto
         /// <returns></returns>
         public static byte[] Encrypt(string data, byte[] pass)
         {
-            if (data == null) throw new ArgumentNullException("data");
+            if (string.IsNullOrEmpty(data)) throw new ArgumentNullException("data");
             if (pass == null) throw new ArgumentNullException("pass");
+            if (pass.Length == 0) throw new ArgumentNullException("pass");
 
-            return Encrypt(Encoding.UTF8.GetBytes(data), pass);
+            return encrypt(Encoding.UTF8.GetBytes(data), pass);
         }
         /// <summary>
         /// Encrypt
@@ -161,10 +173,11 @@ namespace ToolGood.RcxCrypto
         /// <returns></returns>
         public static byte[] Encrypt(string data, byte[] pass, Encoding encoding)
         {
-            if (data == null) throw new ArgumentNullException("data");
+            if (string.IsNullOrEmpty(data)) throw new ArgumentNullException("data");
             if (pass == null) throw new ArgumentNullException("pass");
+            if (pass.Length == 0) throw new ArgumentNullException("pass");
 
-            return Encrypt(encoding.GetBytes(data), pass);
+            return encrypt(encoding.GetBytes(data), pass);
         }
         /// <summary>
         /// Encrypt
@@ -176,7 +189,10 @@ namespace ToolGood.RcxCrypto
         {
             if (data == null) throw new ArgumentNullException("data");
             if (pass == null) throw new ArgumentNullException("pass");
-
+            return encrypt(data, pass);
+        }
+        public static byte[] encrypt(byte[] data, byte[] pass)
+        {
             byte[] mBox = GetKey(pass, keyLen);
             byte[] output = new byte[data.Length];
             int i = 0, j = 0;
@@ -195,6 +211,8 @@ namespace ToolGood.RcxCrypto
             }
             return output;
         }
+
+
 
         private static byte[] GetKey(byte[] pass, int kLen)
         {
