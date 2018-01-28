@@ -175,7 +175,9 @@ namespace ToolGood.RcxCrypto
         public static byte[] Encrypt(byte[] data, byte[] pass)
         {
             if (data == null) throw new ArgumentNullException("data");
+            if (data.Length == 0) throw new ArgumentNullException("data");
             if (pass == null) throw new ArgumentNullException("pass");
+            if (pass.Length == 0) throw new ArgumentNullException("pass");
             return encrypt(data, pass);
         }
 
