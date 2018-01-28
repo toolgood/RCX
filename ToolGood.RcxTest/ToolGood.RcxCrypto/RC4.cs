@@ -7,7 +7,7 @@ namespace ToolGood.RcxCrypto
 {
     public class RC4
     {
-        public byte[] keybox;
+        private byte[] keybox;
         private const int keyLen = 256;
         private Encoding encoding;
 
