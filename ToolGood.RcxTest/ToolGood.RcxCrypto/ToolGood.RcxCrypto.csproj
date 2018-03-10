@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>RC4加密算法，RCX加密算法</Description>
+    <Description>RC4加密算法，RCX加密算法，RCX支持反向加密，适合加密末尾带校验码的字符串</Description>
     <Copyright>Copyright 2017-2018 ToolGood</Copyright>
     <AssemblyTitle>ToolGood.Words</AssemblyTitle>
     <VersionPrefix>2.0.0</VersionPrefix>
@@ -24,8 +24,8 @@
     <RootNamespace>ToolGood.RcxCrypto</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <FileVersion>1.0.0.1</FileVersion>
-    <Version>1.0.0.1</Version>
+    <FileVersion>1.1.0.0</FileVersion>
+    <Version>1.1.0.0</Version>
     <PackageReleaseNotes></PackageReleaseNotes>
     <DelaySign>false</DelaySign>
   </PropertyGroup>

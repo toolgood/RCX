@@ -42,10 +42,10 @@ namespace ToolGood.RcxCrypto
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public byte[] Encrypt(string data)
+        public byte[] Encrypt(string data,OrderType order= OrderType.Asc)
         {
             if (string.IsNullOrEmpty(data)) throw new ArgumentNullException("data");
-            return encrypt(encoding.GetBytes(data));
+            return encrypt(encoding.GetBytes(data), order);
         }
         /// <summary>
         /// Encrypt
@@ -53,23 +53,23 @@ namespace ToolGood.RcxCrypto
         /// <param name="data"></param>
         /// <param name="encoding"></param>
         /// <returns></returns>
-        public byte[] Encrypt(string data, Encoding encoding)
+        public byte[] Encrypt(string data, Encoding encoding, OrderType order = OrderType.Asc)
         {
             if (string.IsNullOrEmpty(data)) throw new ArgumentNullException("data");
-            return encrypt(encoding.GetBytes(data));
+            return encrypt(encoding.GetBytes(data),order);
         }
         /// <summary>
         /// Encrypt
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public byte[] Encrypt(byte[] data)
+        public byte[] Encrypt(byte[] data, OrderType order = OrderType.Asc)
         {
             if (data == null) throw new ArgumentNullException("data");
             if (data.Length == 0) throw new ArgumentNullException("data");
-            return encrypt(data);
+            return encrypt(data, order);
         }
-        private byte[] encrypt(byte[] data)
+        private byte[] encrypt(byte[] data, OrderType order)
         {
 
             byte[] mBox = new byte[keyLen];
@@ -77,18 +77,34 @@ namespace ToolGood.RcxCrypto
             //Buffer.BlockCopy(keybox, 0, mBox, 0, keyLen);
             byte[] output = new byte[data.Length];
             int i = 0, j = 0;
-            for (int offset = 0; offset < data.Length; offset++) {
-                i = (++i) & 0xFF;
-                j = (j + mBox[i]) & 0xFF;
+            if (order== OrderType.Asc) {
+                for (int offset = 0; offset < data.Length; offset++) {
+                    i = (++i) & 0xFF;
+                    j = (j + mBox[i]) & 0xFF;
 
-                byte a = data[offset];
-                byte c = (byte)(a ^ mBox[(mBox[i] + mBox[j]) & 0xFF]);
-                output[offset] = c;
+                    byte a = data[offset];
+                    byte c = (byte)(a ^ mBox[(mBox[i] + mBox[j]) & 0xFF]);
+                    output[offset] = c;
 
-                byte temp2 = mBox[c];
-                mBox[c] = mBox[a];
-                mBox[a] = temp2;
-                j = (j + a + c);
+                    byte temp2 = mBox[c];
+                    mBox[c] = mBox[a];
+                    mBox[a] = temp2;
+                    j = (j + a + c);
+                }
+            } else {
+                for (int offset = data.Length - 1; offset >= 0; offset--) {
+                    i = (++i) & 0xFF;
+                    j = (j + mBox[i]) & 0xFF;
+
+                    byte a = data[offset];
+                    byte c = (byte)(a ^ mBox[(mBox[i] + mBox[j]) & 0xFF]);
+                    output[offset] = c;
+
+                    byte temp2 = mBox[c];
+                    mBox[c] = mBox[a];
+                    mBox[a] = temp2;
+                    j = (j + a + c);
+                }
             }
 
             return output;
@@ -102,12 +118,12 @@ namespace ToolGood.RcxCrypto
         /// <param name="pass"></param>
         /// <param name="encoding"></param>
         /// <returns></returns>
-        public static byte[] Encrypt(string data, string pass, Encoding encoding)
+        public static byte[] Encrypt(string data, string pass, Encoding encoding, OrderType order = OrderType.Asc)
         {
             if (string.IsNullOrEmpty(data)) throw new ArgumentNullException("data");
             if (string.IsNullOrEmpty(pass)) throw new ArgumentNullException("pass");
 
-            return encrypt(encoding.GetBytes(data), encoding.GetBytes(pass));
+            return encrypt(encoding.GetBytes(data), encoding.GetBytes(pass), order);
         }
         /// <summary>
         /// Encrypt
@@ -115,12 +131,12 @@ namespace ToolGood.RcxCrypto
         /// <param name="data"></param>
         /// <param name="pass"></param>
         /// <returns></returns>
-        public static byte[] Encrypt(string data, string pass)
+        public static byte[] Encrypt(string data, string pass, OrderType order = OrderType.Asc)
         {
             if (string.IsNullOrEmpty(data)) throw new ArgumentNullException("data");
             if (string.IsNullOrEmpty(pass)) throw new ArgumentNullException("pass");
 
-            return encrypt(Encoding.UTF8.GetBytes(data), Encoding.UTF8.GetBytes(pass));
+            return encrypt(Encoding.UTF8.GetBytes(data), Encoding.UTF8.GetBytes(pass), order);
         }
         /// <summary>
         /// Encrypt
@@ -128,13 +144,13 @@ namespace ToolGood.RcxCrypto
         /// <param name="data"></param>
         /// <param name="pass"></param>
         /// <returns></returns>
-        public static byte[] Encrypt(byte[] data, string pass, Encoding encoding)
+        public static byte[] Encrypt(byte[] data, string pass, Encoding encoding, OrderType order = OrderType.Asc)
         {
             if (data == null) throw new ArgumentNullException("data");
             if (data.Length == 0) throw new ArgumentNullException("data");
             if (string.IsNullOrEmpty(pass)) throw new ArgumentNullException("pass");
 
-            return encrypt(data, encoding.GetBytes(pass));
+            return encrypt(data, encoding.GetBytes(pass), order);
         }
         /// <summary>
         /// Encrypt
@@ -142,13 +158,13 @@ namespace ToolGood.RcxCrypto
         /// <param name="data"></param>
         /// <param name="pass"></param>
         /// <returns></returns>
-        public static byte[] Encrypt(byte[] data, string pass)
+        public static byte[] Encrypt(byte[] data, string pass, OrderType order = OrderType.Asc)
         {
             if (data == null) throw new ArgumentNullException("data");
             if (data.Length == 0) throw new ArgumentNullException("data");
             if (string.IsNullOrEmpty(pass)) throw new ArgumentNullException("pass");
 
-            return encrypt(data, Encoding.UTF8.GetBytes(pass));
+            return encrypt(data, Encoding.UTF8.GetBytes(pass), order);
         }
         /// <summary>
         /// Encrypt
@@ -156,13 +172,13 @@ namespace ToolGood.RcxCrypto
         /// <param name="data"></param>
         /// <param name="pass"></param>
         /// <returns></returns>
-        public static byte[] Encrypt(string data, byte[] pass)
+        public static byte[] Encrypt(string data, byte[] pass, OrderType order = OrderType.Asc)
         {
             if (string.IsNullOrEmpty(data)) throw new ArgumentNullException("data");
             if (pass == null) throw new ArgumentNullException("pass");
             if (pass.Length == 0) throw new ArgumentNullException("pass");
 
-            return encrypt(Encoding.UTF8.GetBytes(data), pass);
+            return encrypt(Encoding.UTF8.GetBytes(data), pass, order);
         }
         /// <summary>
         /// Encrypt
@@ -171,13 +187,13 @@ namespace ToolGood.RcxCrypto
         /// <param name="pass"></param>
         /// <param name="encoding"></param>
         /// <returns></returns>
-        public static byte[] Encrypt(string data, byte[] pass, Encoding encoding)
+        public static byte[] Encrypt(string data, byte[] pass, Encoding encoding, OrderType order = OrderType.Asc)
         {
             if (string.IsNullOrEmpty(data)) throw new ArgumentNullException("data");
             if (pass == null) throw new ArgumentNullException("pass");
             if (pass.Length == 0) throw new ArgumentNullException("pass");
 
-            return encrypt(encoding.GetBytes(data), pass);
+            return encrypt(encoding.GetBytes(data), pass, order);
         }
         /// <summary>
         /// Encrypt
@@ -185,32 +201,49 @@ namespace ToolGood.RcxCrypto
         /// <param name="data"></param>
         /// <param name="pass"></param>
         /// <returns></returns>
-        public static byte[] Encrypt(byte[] data, byte[] pass)
+        public static byte[] Encrypt(byte[] data, byte[] pass, OrderType order = OrderType.Asc)
         {
             if (data == null) throw new ArgumentNullException("data");
             if (data.Length == 0) throw new ArgumentNullException("data");
             if (pass == null) throw new ArgumentNullException("pass");
             if (pass.Length == 0) throw new ArgumentNullException("pass");
 
-            return encrypt(data, pass);
+            return encrypt(data, pass,order);
         }
-        private static byte[] encrypt(byte[] data, byte[] pass)
+        private static byte[] encrypt(byte[] data, byte[] pass, OrderType order)
         {
             byte[] mBox = GetKey(pass, keyLen);
             byte[] output = new byte[data.Length];
             int i = 0, j = 0;
-            for (int offset = 0; offset < data.Length; offset++) {
-                i = (++i) & 0xFF;
-                j = (j + mBox[i]) & 0xFF;
 
-                byte a = data[offset];
-                byte c = (byte)(a ^ mBox[(mBox[i] + mBox[j]) & 0xFF]);
-                output[offset] = c;
+            if (order== OrderType.Asc) {
+                for (int offset = 0; offset < data.Length; offset++) {
+                    i = (++i) & 0xFF;
+                    j = (j + mBox[i]) & 0xFF;
 
-                byte temp2 = mBox[c];
-                mBox[c] = mBox[a];
-                mBox[a] = temp2;
-                j = (j + a + c);
+                    byte a = data[offset];
+                    byte c = (byte)(a ^ mBox[(mBox[i] + mBox[j]) & 0xFF]);
+                    output[offset] = c;
+
+                    byte temp2 = mBox[c];
+                    mBox[c] = mBox[a];
+                    mBox[a] = temp2;
+                    j = (j + a + c);
+                }
+            } else {
+                for (int offset = data.Length - 1; offset >= 0; offset--) {
+                    i = (++i) & 0xFF;
+                    j = (j + mBox[i]) & 0xFF;
+
+                    byte a = data[offset];
+                    byte c = (byte)(a ^ mBox[(mBox[i] + mBox[j]) & 0xFF]);
+                    output[offset] = c;
+
+                    byte temp2 = mBox[c];
+                    mBox[c] = mBox[a];
+                    mBox[a] = temp2;
+                    j = (j + a + c);
+                }
             }
             return output;
         }
