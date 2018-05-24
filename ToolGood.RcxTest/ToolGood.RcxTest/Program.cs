@@ -38,6 +38,13 @@ namespace ToolGood.RcxTest
             Console.WriteLine("RCX('1234567891234567891234567') => " + Base64.ToBase64ForUrlString(RCX.Encrypt("1234567891234567891234567", "ToolGood", encoding)));
             Console.WriteLine("RCX('1234567800034567891234567') => " + Base64.ToBase64ForUrlString(RCX.Encrypt("1234567800034567891234567", "ToolGood", encoding)));
 
+            Console.WriteLine("");
+            Console.WriteLine("ThreeRCX('ABCDDDDDDDDDDDDDDDDDDDDDD') => " + Base64.ToBase64ForUrlString(ThreeRCX.Encrypt("ABCDDDDDDDDDDDDDDDDDDDDDD", "ToolGood", encoding)));
+            Console.WriteLine("ThreeRCX('ACBDDDDDDDDDDDDDDDDDDDDDD') => " + Base64.ToBase64ForUrlString(ThreeRCX.Encrypt("ACBDDDDDDDDDDDDDDDDDDDDDD", "ToolGood", encoding)));
+            Console.WriteLine("ThreeRCX('CBADDDDDDDDDDDDDDDDDDDDDD') => " + Base64.ToBase64ForUrlString(ThreeRCX.Encrypt("CBADDDDDDDDDDDDDDDDDDDDDD", "ToolGood", encoding)));
+            Console.WriteLine("ThreeRCX('1234567891234567891234567') => " + Base64.ToBase64ForUrlString(ThreeRCX.Encrypt("1234567891234567891234567", "ToolGood", encoding)));
+            Console.WriteLine("ThreeRCX('1234567800034567891234567') => " + Base64.ToBase64ForUrlString(ThreeRCX.Encrypt("1234567800034567891234567", "ToolGood", encoding)));
+
 
             Console.WriteLine("");
             Console.WriteLine("3、测试RCX算法的性能(Testing the performance of the RCX algorithm)");

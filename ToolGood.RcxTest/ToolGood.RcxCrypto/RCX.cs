@@ -20,6 +20,18 @@ namespace ToolGood.RcxCrypto
         private const int keyLen = 256;
         private Encoding encoding;
 
+        public RCX(byte[] pass)
+        {
+            encoding = Encoding.UTF8;
+            keybox = GetKey(pass, keyLen);
+        }
+
+
+        public RCX(byte[] pass, Encoding encoding)
+        {
+            encoding = encoding;
+            keybox = GetKey(pass, keyLen);
+        }
 
         public RCX(string pass)
         {
