@@ -19,12 +19,20 @@ namespace ToolGood.RcxTest
 
             Console.WriteLine("1、测试RCX算法的正确性(Testing the correctness of the RCX algorithm)");
             Console.WriteLine("明文(original text)：hello RCX!");
-            var bytes = RCX.Encrypt("hello RCX!", "ToolGood",encoding);
+            var bytes = RCX.Encrypt("hello RCX!", "ToolGood", encoding);
             Console.WriteLine("加密后数据(ecrypted data)：" + Base64.ToBase64ForUrlString(bytes));
-            Console.WriteLine("解密后文本(decrypted text)：" + Encoding.UTF8.GetString(RCX.Encrypt(bytes, "ToolGood",encoding)));
+            Console.WriteLine("解密后文本(decrypted text)：" + Encoding.UTF8.GetString(RCX.Encrypt(bytes, "ToolGood", encoding)));
+
+
+            Console.WriteLine("2、测试RCX算法的正确性(Testing the correctness of the RCX algorithm)");
+            Console.WriteLine("明文(original text)：hello RCY!");
+              bytes = RCY.Encrypt("hello RCY!", "ToolGood", encoding);
+            Console.WriteLine("加密后数据(ecrypted data)：" + Base64.ToBase64ForUrlString(bytes));
+            Console.WriteLine("解密后文本(decrypted text)：" + Encoding.UTF8.GetString(RCY.Encrypt(bytes, "ToolGood", encoding)));
+
 
             Console.WriteLine("");
-            Console.WriteLine("2、测试RCX算法的变化能力(Testing the ability to change the RCX algorithm)");
+            Console.WriteLine("3、测试RCX算法的变化能力(Testing the ability to change the RCX algorithm)");
             Console.WriteLine("RC4('ABCDDDDDDDDDDDDDDDDDDDDDD') => " + Base64.ToBase64ForUrlString(RC4.Encrypt("ABCDDDDDDDDDDDDDDDDDDDDDD", "ToolGood", encoding)));
             Console.WriteLine("RC4('ACBDDDDDDDDDDDDDDDDDDDDDD') => " + Base64.ToBase64ForUrlString(RC4.Encrypt("ACBDDDDDDDDDDDDDDDDDDDDDD", "ToolGood", encoding)));
             Console.WriteLine("RC4('CBADDDDDDDDDDDDDDDDDDDDDD') => " + Base64.ToBase64ForUrlString(RC4.Encrypt("CBADDDDDDDDDDDDDDDDDDDDDD", "ToolGood", encoding)));
@@ -45,6 +53,25 @@ namespace ToolGood.RcxTest
             Console.WriteLine("ThreeRCX('1234567891234567891234567') => " + Base64.ToBase64ForUrlString(ThreeRCX.Encrypt("1234567891234567891234567", "ToolGood", encoding)));
             Console.WriteLine("ThreeRCX('1234567800034567891234567') => " + Base64.ToBase64ForUrlString(ThreeRCX.Encrypt("1234567800034567891234567", "ToolGood", encoding)));
 
+            Console.WriteLine("");
+            Console.WriteLine("RCY('ABCDDDDDDDDDDDDDDDDDDDDDD') => " + Base64.ToBase64ForUrlString(RCY.Encrypt("ABCDDDDDDDDDDDDDDDDDDDDDD", "ToolGood", encoding)));
+            Console.WriteLine("RCX('ACBDDDDDDDDDDDDDDDDDDDDDD') => " + Base64.ToBase64ForUrlString(RCY.Encrypt("ACBDDDDDDDDDDDDDDDDDDDDDD", "ToolGood", encoding)));
+            Console.WriteLine("RCY('CBADDDDDDDDDDDDDDDDDDDDDD') => " + Base64.ToBase64ForUrlString(RCY.Encrypt("CBADDDDDDDDDDDDDDDDDDDDDD", "ToolGood", encoding)));
+            Console.WriteLine("RCY('1234567891234567891234567') => " + Base64.ToBase64ForUrlString(RCY.Encrypt("1234567891234567891234567", "ToolGood", encoding)));
+            Console.WriteLine("RCY('1234567800034567891234567') => " + Base64.ToBase64ForUrlString(RCY.Encrypt("1234567800034567891234567", "ToolGood", encoding)));
+
+            Console.WriteLine("");
+            Console.WriteLine("ThreeRCY('ABCDDDDDDDDDDDDDDDDDDDDDD') => " + Base64.ToBase64ForUrlString(ThreeRCY.Encrypt("ABCDDDDDDDDDDDDDDDDDDDDDD", "ToolGood", encoding)));
+            Console.WriteLine("ThreeRCY('ACBDDDDDDDDDDDDDDDDDDDDDD') => " + Base64.ToBase64ForUrlString(ThreeRCY.Encrypt("ACBDDDDDDDDDDDDDDDDDDDDDD", "ToolGood", encoding)));
+            Console.WriteLine("ThreeRCY('CBADDDDDDDDDDDDDDDDDDDDDD') => " + Base64.ToBase64ForUrlString(ThreeRCY.Encrypt("CBADDDDDDDDDDDDDDDDDDDDDD", "ToolGood", encoding)));
+            Console.WriteLine("ThreeRCY('1234567891234567891234567') => " + Base64.ToBase64ForUrlString(ThreeRCY.Encrypt("1234567891234567891234567", "ToolGood", encoding)));
+            Console.WriteLine("ThreeRCY('1234567800034567891234567') => " + Base64.ToBase64ForUrlString(ThreeRCY.Encrypt("1234567800034567891234567", "ToolGood", encoding)));
+
+
+            //Console.WriteLine("RCX('ABCDDDDDDDDDDDDDDDDDDDDDD') => " + Base64.ToBase64ForUrlString(RCX.Encrypt("ABCDDDDDDDDDDDDDDDDDDDDDD", "ToolGood", Encoding.ASCII)));
+            var t = RCX.Encrypt("ABCDDDDDDDDDDDDDDDDDDDDDD", "ToolGood", Encoding.UTF8);
+            var dd = Convert.ToBase64String(t);
+            var t1 = RCX.Encrypt("测试RCX算法的性能", "ToolGood");
 
             Console.WriteLine("");
             Console.WriteLine("3、测试RCX算法的性能(Testing the performance of the RCX algorithm)");
@@ -54,7 +81,8 @@ namespace ToolGood.RcxTest
             var count = 1000;
             DoRC4(str, "ToolGood", count);
             DoRCX(str, "ToolGood", count);
-
+            DoRCY(str, "ToolGood", count);
+             
             Console.ReadKey();
         }
         public static void DoRC4(string txt, string pass, int count)
@@ -79,6 +107,18 @@ namespace ToolGood.RcxTest
             stopwatch.Stop();
             Console.WriteLine("RCX => " + stopwatch.ElapsedMilliseconds.ToString() + "ms");
         }
+        public static void DoRCY(string txt, string pass, int count)
+        {
+            var rc4x = new RCY(pass);
+            System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+            stopwatch.Start();
+            for (int i = 0; i < count; i++) {
+                rc4x.Encrypt(txt);
+            }
+            stopwatch.Stop();
+            Console.WriteLine("RCY => " + stopwatch.ElapsedMilliseconds.ToString() + "ms");
+        }
+      
 
 
     }
