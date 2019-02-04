@@ -14,12 +14,12 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ToolGood")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyCopyrightAttribute("Copyright 2017-2018 ToolGood")]
-[assembly: System.Reflection.AssemblyDescriptionAttribute("RC4加密算法，RCX加密算法，RCX支持反向加密，适合加密末尾带校验码的字符串，ThreeRCX加密算法")]
-[assembly: System.Reflection.AssemblyFileVersionAttribute("1.2.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.2.0.0")]
+[assembly: System.Reflection.AssemblyDescriptionAttribute("RC4加密算法，RCX加密算法，RCX支持反向加密，适合加密末尾带校验码的字符串，ThreeRCX加密算法，RCY加密算法比RCX效率更高")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.3.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.3.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("ToolGood.RcxCrypto")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ToolGood.Words")]
-[assembly: System.Reflection.AssemblyVersionAttribute("1.2.0.0")]
+[assembly: System.Reflection.AssemblyVersionAttribute("1.3.0.0")]
 
 // 由 MSBuild WriteCodeFragment 类生成。
 

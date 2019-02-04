@@ -919,12 +919,11 @@
   },
   "libraries": {
     "Microsoft.NETCore.Platforms/1.1.0": {
-      "sha512": "bLpT1f/SFlO1CzqXG12KnJzpZs6lv24uX2Rzi4Fmm0noJpNlnWRVryuO3yK18Ca04t/YHcO1e1Z0WDfjseqNzw==",
+      "sha512": "kz0PEW2lhqygehI/d6XsPCQzD7ff7gUJaVGPVETX611eadGsA3A877GdSlU0LRVMCTH/+P3o2iDTak+S08V2+A==",
       "type": "package",
       "path": "microsoft.netcore.platforms/1.1.0",
       "files": [
         ".nupkg.metadata",
-        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.0/_._",
@@ -2286,12 +2285,11 @@
       ]
     },
     "System.Net.Http/4.3.0": {
-      "sha512": "Z1UfSF6dlpCdZdxh6LeoGlYH+q6ptG/iiIWgUUeKhE3DbQACmZkU7Sz2nOX0qdHjz72MOdYRbkSJ5Qwl6sZgvg==",
+      "sha512": "sYg+FtILtRQuYWSIAuNOELwVuVsxVyJGWQyOnlAzhV4xvhyFnON1bAzYYC+jjRW8JREM45R0R5Dgi8MTC5sEwA==",
       "type": "package",
       "path": "system.net.http/4.3.0",
       "files": [
         ".nupkg.metadata",
-        ".signature.p7s",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/Xamarinmac20/_._",
@@ -3929,24 +3927,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\admin\\.nuget\\packages\\": {},
+    "C:\\Users\\LinZhijun\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.2.0",
+    "version": "1.3.0",
     "restore": {
-      "projectUniqueName": "D:\\git\\RCX\\ToolGood.RcxTest\\ToolGood.RcxCrypto\\ToolGood.RcxCrypto.csproj",
+      "projectUniqueName": "F:\\git\\RCX\\ToolGood.RcxTest\\ToolGood.RcxCrypto\\ToolGood.RcxCrypto.csproj",
       "projectName": "ToolGood.RcxCrypto",
-      "projectPath": "D:\\git\\RCX\\ToolGood.RcxTest\\ToolGood.RcxCrypto\\ToolGood.RcxCrypto.csproj",
-      "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "D:\\git\\RCX\\ToolGood.RcxTest\\ToolGood.RcxCrypto\\obj\\",
+      "projectPath": "F:\\git\\RCX\\ToolGood.RcxTest\\ToolGood.RcxCrypto\\ToolGood.RcxCrypto.csproj",
+      "packagesPath": "C:\\Users\\LinZhijun\\.nuget\\packages\\",
+      "outputPath": "F:\\git\\RCX\\ToolGood.RcxTest\\ToolGood.RcxCrypto\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\LinZhijun\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3956,11 +3954,8 @@
         "netstandard2.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "http://192.168.100.134:8089/nuget": {},
-        "http://192.168.100.174:8091/nuget": {},
-        "https://api.nuget.org/v3/index.json": {},
-        "https://dotnet.myget.org/F/dotnet-core/api/v3/index.json": {}
+        "E:\\本地Nuget": {},
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net40": {
