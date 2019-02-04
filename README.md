@@ -4,7 +4,7 @@ RCX算法基于RC4算法改进，性能相差不太。
 
 The RCX algorithm is improved based on the RC4 algorithm, and performance is almost the same.
  
-#### RCX算法与RC4算法比较 （Comparison between RCX algorithm and RC4 algorithm ）
+#### RCX算法、RCY算法、RC4算法比较 （Comparisons of RCX, RCY and RC4 algorithms ）
 
 编码类型(Encoding)：ASCII
 
@@ -44,11 +44,46 @@ ThreeRCX('CBADDDDDDDDDDDDDDDDDDDDDD') => Vui-aiMNvIK-ozqOUVsSccrM__W6arUJQQ
 ThreeRCX('1234567891234567891234567') => sQAd5pyGScLkgfWt5sHaJsCCA_hRafzvgA
 
 ThreeRCX('1234567800034567891234567') => dKT7qYYvWV-xjmLNCoM-HPcHZr-9ecilzg
+
+
+RCY('ABCDDDDDDDDDDDDDDDDDDDDDD') => RTpQcXF5L-ylWYGeWRf8wMCecXHy4ABlug
+
+RCX('ACBDDDDDDDDDDDDDDDDDDDDDD') => RTsgQRPAgEChJvK2tkMLtg55cXHAR68YBQ
+
+RCY('CBADDDDDDDDDDDDDDDDDDDDDD') => R19cceZXygsOfoDsJm4myqXgwMDAR68YBQ
+
+RCY('1234567891234567891234567') => NWB6fjYys97HT4T3sABUuXS7w5q3HR6PYw
+
+RCY('1234567800034567891234567') => NWB6fjYys97Own-xxp15AgUE60FYsAV_ZQ
+
+
+ThreeRCY('ABCDDDDDDDDDDDDDDDDDDDDDD') => hSclXtNhUKgh5xD5LyGAp9a4eNH1btHobQ
+
+ThreeRCY('ACBDDDDDDDDDDDDDDDDDDDDDD') => pR9wz1Pm18VHQVFttsYF3ryqR6RtipsVFw
+
+ThreeRCY('CBADDDDDDDDDDDDDDDDDDDDDD') => Z5eewmvC6roXNLKFvzTn8_4IgIjtQco8xQ
+
+ThreeRCY('1234567891234567891234567') => QQHv2CJoIoREo0VRVrH9QFYDl_piBJ9QbA
+
+ThreeRCY('1234567800034567891234567') => ZacKM0jFxevnI39XuSWCxOu1nc4krgC2hA
+
 `````
 
 从上面的代码，可以明显看出RC4算法加密的缺点，而数据经过RCX算法加密后变得无序。
 
 From the above code, you can clearly see the shortcomings of RC4 algorithm encryption,But the data is encrypted by the RCX algorithm and becomes disordered. 
+
+####  测试RCX、RCY算法的性能(Testing the performance of the RCX and RCY algorithm)
+
+数据长度(data length)：10000
+
+加密次数(encryption count)：1000
+ 
+RCX => 72ms
+
+RCY => 66ms
+
+
 
 #### 核心代码（Core code ）
 RCX算法采用[明文]与[密文]对密码盘进行调换，并且对 j 进行修改: j=j+[明文]+[密文] 。
