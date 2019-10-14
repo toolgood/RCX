@@ -81,43 +81,87 @@ namespace ToolGood.RcxCrypto
             if (data.Length == 0) throw new ArgumentNullException("data");
             return encrypt(data, order);
         }
-        private byte[] encrypt(byte[] data, OrderType order)
+        private unsafe byte[] encrypt(byte[] data, OrderType order)
         {
 
             byte[] mBox = new byte[keyLen];
             Array.Copy(keybox, mBox, keyLen);
             //Buffer.BlockCopy(keybox, 0, mBox, 0, keyLen);
             byte[] output = new byte[data.Length];
-            int i = 0, j = 0;
+
+
             if (order == OrderType.Asc) {
-                for (int offset = 0; offset < data.Length; offset++) {
-                    i = (++i) & 0xFF;
-                    j = (j + mBox[i]) & 0xFF;
+                fixed (byte* _mBox = &mBox[0])
+                fixed (byte* _data = &data[0])
+                fixed (byte* _output = &output[0]) {
+                    var length = data.Length;
+                    int i = 0, j = 0;
+                    for (Int64 offset = 0; offset < length; offset++) {
+                        i = (++i) & 0xFF;
+                        j = (j + *(_mBox + i)) & 0xFF;
 
-                    byte a = data[offset];
-                    byte c = (byte)(a ^ mBox[(mBox[i] + mBox[j]) & 0xFF]);
-                    output[offset] = c;
+                        byte a = *(_data + offset);
+                        byte c = (byte)(a ^ *(_mBox + ((*(_mBox + i) + *(_mBox + j)) & 0xFF)));
+                        *(_output + offset) = c;
 
-                    byte temp2 = mBox[c];
-                    mBox[c] = mBox[a];
-                    mBox[a] = temp2;
-                    j = (j + a + c);
+                        byte temp = *(_mBox + a);
+                        *(_mBox + a) = *(_mBox + c);
+                        *(_mBox + c) = temp;
+                        j = (j + a + c);
+                    }
                 }
             } else {
-                for (int offset = data.Length - 1; offset >= 0; offset--) {
-                    i = (++i) & 0xFF;
-                    j = (j + mBox[i]) & 0xFF;
+                fixed (byte* _mBox = &mBox[0])
+                fixed (byte* _data = &data[0])
+                fixed (byte* _output = &output[0]) {
+                    var length = data.Length;
+                    int i = 0, j = 0;
+                    for (int offset = data.Length - 1; offset >= 0; offset--) {
+                        i = (++i) & 0xFF;
+                        j = (j + *(_mBox + i)) & 0xFF;
 
-                    byte a = data[offset];
-                    byte c = (byte)(a ^ mBox[(mBox[i] + mBox[j]) & 0xFF]);
-                    output[offset] = c;
+                        byte a = *(_data + offset);
+                        byte c = (byte)(a ^ *(_mBox + ((*(_mBox + i) + *(_mBox + j)) & 0xFF)));
+                        *(_output + offset) = c;
 
-                    byte temp2 = mBox[c];
-                    mBox[c] = mBox[a];
-                    mBox[a] = temp2;
-                    j = (j + a + c);
+                        byte temp = *(_mBox + a);
+                        *(_mBox + a) = *(_mBox + c);
+                        *(_mBox + c) = temp;
+                        j = (j + a + c);
+                    }
                 }
             }
+
+            //int i = 0, j = 0;
+            //if (order == OrderType.Asc) {
+            //    for (int offset = 0; offset < data.Length; offset++) {
+            //        i = (++i) & 0xFF;
+            //        j = (j + mBox[i]) & 0xFF;
+
+            //        byte a = data[offset];
+            //        byte c = (byte)(a ^ mBox[(mBox[i] + mBox[j]) & 0xFF]);
+            //        output[offset] = c;
+
+            //        byte temp2 = mBox[c];
+            //        mBox[c] = mBox[a];
+            //        mBox[a] = temp2;
+            //        j = (j + a + c);
+            //    }
+            //} else {
+            //    for (int offset = data.Length - 1; offset >= 0; offset--) {
+            //        i = (++i) & 0xFF;
+            //        j = (j + mBox[i]) & 0xFF;
+
+            //        byte a = data[offset];
+            //        byte c = (byte)(a ^ mBox[(mBox[i] + mBox[j]) & 0xFF]);
+            //        output[offset] = c;
+
+            //        byte temp2 = mBox[c];
+            //        mBox[c] = mBox[a];
+            //        mBox[a] = temp2;
+            //        j = (j + a + c);
+            //    }
+            //}
 
             return output;
         }
@@ -222,41 +266,83 @@ namespace ToolGood.RcxCrypto
 
             return encrypt(data, pass, order);
         }
-        private static byte[] encrypt(byte[] data, byte[] pass, OrderType order)
+        private unsafe static byte[] encrypt(byte[] data, byte[] pass, OrderType order)
         {
             byte[] mBox = GetKey(pass, keyLen);
             byte[] output = new byte[data.Length];
-            int i = 0, j = 0;
+            //int i = 0, j = 0;
 
             if (order == OrderType.Asc) {
-                for (int offset = 0; offset < data.Length; offset++) {
-                    i = (++i) & 0xFF;
-                    j = (j + mBox[i]) & 0xFF;
+                fixed (byte* _mBox = &mBox[0])
+                fixed (byte* _data = &data[0])
+                fixed (byte* _output = &output[0]) {
+                    var length = data.Length;
+                    int i = 0, j = 0;
+                    for (Int64 offset = 0; offset < length; offset++) {
+                        i = (++i) & 0xFF;
+                        j = (j + *(_mBox + i)) & 0xFF;
 
-                    byte a = data[offset];
-                    byte c = (byte)(a ^ mBox[(mBox[i] + mBox[j]) & 0xFF]);
-                    output[offset] = c;
+                        byte a = *(_data + offset);
+                        byte c = (byte)(a ^ *(_mBox + ((*(_mBox + i) + *(_mBox + j)) & 0xFF)));
+                        *(_output + offset) = c;
 
-                    byte temp2 = mBox[c];
-                    mBox[c] = mBox[a];
-                    mBox[a] = temp2;
-                    j = (j + a + c);
+                        byte temp = *(_mBox + a);
+                        *(_mBox + a) = *(_mBox + c);
+                        *(_mBox + c) = temp;
+                        j = (j + a + c);
+                    }
                 }
             } else {
-                for (int offset = data.Length - 1; offset >= 0; offset--) {
-                    i = (++i) & 0xFF;
-                    j = (j + mBox[i]) & 0xFF;
+                fixed (byte* _mBox = &mBox[0])
+                fixed (byte* _data = &data[0])
+                fixed (byte* _output = &output[0]) {
+                    var length = data.Length;
+                    int i = 0, j = 0;
+                    for (int offset = data.Length - 1; offset >= 0; offset--) {
+                        i = (++i) & 0xFF;
+                        j = (j + *(_mBox + i)) & 0xFF;
 
-                    byte a = data[offset];
-                    byte c = (byte)(a ^ mBox[(mBox[i] + mBox[j]) & 0xFF]);
-                    output[offset] = c;
+                        byte a = *(_data + offset);
+                        byte c = (byte)(a ^ *(_mBox + ((*(_mBox + i) + *(_mBox + j)) & 0xFF)));
+                        *(_output + offset) = c;
 
-                    byte temp2 = mBox[c];
-                    mBox[c] = mBox[a];
-                    mBox[a] = temp2;
-                    j = (j + a + c);
+                        byte temp = *(_mBox + a);
+                        *(_mBox + a) = *(_mBox + c);
+                        *(_mBox + c) = temp;
+                        j = (j + a + c);
+                    }
                 }
             }
+
+            //if (order == OrderType.Asc) {
+            //    for (int offset = 0; offset < data.Length; offset++) {
+            //        i = (++i) & 0xFF;
+            //        j = (j + mBox[i]) & 0xFF;
+
+            //        byte a = data[offset];
+            //        byte c = (byte)(a ^ mBox[(mBox[i] + mBox[j]) & 0xFF]);
+            //        output[offset] = c;
+
+            //        byte temp2 = mBox[c];
+            //        mBox[c] = mBox[a];
+            //        mBox[a] = temp2;
+            //        j = (j + a + c);
+            //    }
+            //} else {
+            //    for (int offset = data.Length - 1; offset >= 0; offset--) {
+            //        i = (++i) & 0xFF;
+            //        j = (j + mBox[i]) & 0xFF;
+
+            //        byte a = data[offset];
+            //        byte c = (byte)(a ^ mBox[(mBox[i] + mBox[j]) & 0xFF]);
+            //        output[offset] = c;
+
+            //        byte temp2 = mBox[c];
+            //        mBox[c] = mBox[a];
+            //        mBox[a] = temp2;
+            //        j = (j + a + c);
+            //    }
+            //}
             return output;
         }
 

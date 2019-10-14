@@ -70,19 +70,22 @@ namespace ToolGood.RcxCrypto
             fixed (byte* _mBox = &mBox[0])
             fixed (byte* _data = &data[0])
             fixed (byte* _output = &output[0]) {
+                var length = data.Length;
                 int i = 0, j = 0;
-                for (Int64 offset = 0; offset < data.Length; offset++) {
+                for (Int64 offset = 0; offset < length; offset++) {
                     i = (++i) & 0xFF;
                     j = (j + *(_mBox + i)) & 0xFF;
                     byte temp = *(_mBox + i);
                     *(_mBox + i) = *(_mBox + j);
                     *(_mBox + j) = temp;
 
+
                     byte a = *(_data + offset);
                     byte b = *(_mBox + ((*(_mBox + i) + *(_mBox + j)) & 0xFF));
                     *(_output + offset) = (byte)((int)a ^ (int)b);
                 }
             }
+
 
             //for (Int64 offset = 0; offset < data.Length; offset++) {
             //    i = (++i) & 0xFF;
@@ -205,13 +208,13 @@ namespace ToolGood.RcxCrypto
 
             byte[] mBox = GetKey(pass, keyLen);
             byte[] output = new byte[data.Length];
-            int i = 0, j = 0;
 
             fixed (byte* _mBox = &mBox[0])
             fixed (byte* _data = &data[0])
             fixed (byte* _output = &output[0]) {
-                for (Int64 offset = 0; offset < data.Length; offset++) {
-
+                var length = data.Length;
+                int i = 0, j = 0;
+                for (Int64 offset = 0; offset < length; offset++) {
                     i = (++i) & 0xFF;
                     j = (j + *(_mBox + i)) & 0xFF;
                     byte temp = *(_mBox + i);
