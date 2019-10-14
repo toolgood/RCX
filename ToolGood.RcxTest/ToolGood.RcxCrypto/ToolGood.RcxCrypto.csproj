@@ -6,7 +6,7 @@
     <AssemblyTitle>ToolGood.Words</AssemblyTitle>
     <VersionPrefix>2.0.0</VersionPrefix>
     <Authors>ToolGood</Authors>
-    <TargetFrameworks>net40;net45;netstandard1.3;netstandard2.0;</TargetFrameworks>
+    <TargetFrameworks>net40;net45;netstandard2.0;</TargetFrameworks>
     <AssemblyName>ToolGood.RcxCrypto</AssemblyName>
     <AssemblyOriginatorKeyFile>ToolGood.RcxCrypto.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
@@ -17,9 +17,6 @@
     <PackageLicenseUrl>https://github.com/toolgood/RCX/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/toolgood/RCX</RepositoryUrl>
-    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard1.3' ">$(PackageTargetFallback);dotnet</PackageTargetFallback>
-    <PackageTargetFallback Condition=" '$(TargetFramework)' == 'netstandard2.0' ">$(PackageTargetFallback);dotnet</PackageTargetFallback>
-    <AutoUnifyAssemblyReferences Condition="'$(TargetFramework)' == 'net40'">false</AutoUnifyAssemblyReferences>
     <RootNamespace>ToolGood.RcxCrypto</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -27,6 +24,8 @@
     <Version>1.3.0.0</Version>
     <PackageReleaseNotes></PackageReleaseNotes>
     <DelaySign>false</DelaySign>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
@@ -39,10 +38,6 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
-    <DefineConstants>$(DefineConstants);NETSTANDARD</DefineConstants>
-  </PropertyGroup>
-  
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
     <DefineConstants>$(DefineConstants);NETSTANDARD</DefineConstants>
   </PropertyGroup>

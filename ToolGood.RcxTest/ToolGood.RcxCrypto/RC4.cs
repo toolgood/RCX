@@ -59,25 +59,42 @@ namespace ToolGood.RcxCrypto
             if (data.Length == 0) throw new ArgumentNullException("data");
             return encrypt(data);
         }
-        private byte[] encrypt(byte[] data)
+        private unsafe byte[] encrypt(byte[] data)
         {
             byte[] mBox = new byte[keyLen];
             //Buffer.BlockCopy(keybox, 0, mBox, 0, keyLen);
 
             Array.Copy(keybox, mBox, keyLen);
             byte[] output = new byte[data.Length];
-            int i = 0, j = 0;
-            for (Int64 offset = 0; offset < data.Length; offset++) {
-                i = (++i) & 0xFF;
-                j = (j + mBox[i]) & 0xFF;
-                byte temp = mBox[i];
-                mBox[i] = mBox[j];
-                mBox[j] = temp;
 
-                byte a = data[offset];
-                byte b = mBox[(mBox[i] + mBox[j]) & 0xFF];
-                output[offset] = (byte)((int)a ^ (int)b);
+            fixed (byte* _mBox = &mBox[0])
+            fixed (byte* _data = &data[0])
+            fixed (byte* _output = &output[0]) {
+                int i = 0, j = 0;
+                for (Int64 offset = 0; offset < data.Length; offset++) {
+                    i = (++i) & 0xFF;
+                    j = (j + *(_mBox + i)) & 0xFF;
+                    byte temp = *(_mBox + i);
+                    *(_mBox + i) = *(_mBox + j);
+                    *(_mBox + j) = temp;
+
+                    byte a = *(_data + offset);
+                    byte b = *(_mBox + ((*(_mBox + i) + *(_mBox + j)) & 0xFF));
+                    *(_output + offset) = (byte)((int)a ^ (int)b);
+                }
             }
+
+            //for (Int64 offset = 0; offset < data.Length; offset++) {
+            //    i = (++i) & 0xFF;
+            //    j = (j + mBox[i]) & 0xFF;
+            //    byte temp = mBox[i];
+            //    mBox[i] = mBox[j];
+            //    mBox[j] = temp;
+
+            //    byte a = data[offset];
+            //    byte b = mBox[(mBox[i] + mBox[j]) & 0xFF];
+            //    output[offset] = (byte)((int)a ^ (int)b);
+            //}
             return output;
         }
 
@@ -181,7 +198,7 @@ namespace ToolGood.RcxCrypto
             return encrypt(data, pass);
         }
 
-        private static byte[] encrypt(byte[] data, byte[] pass)
+        private static unsafe byte[] encrypt(byte[] data, byte[] pass)
         {
             if (data == null) throw new ArgumentNullException("data");
             if (pass == null) throw new ArgumentNullException("pass");
@@ -189,35 +206,72 @@ namespace ToolGood.RcxCrypto
             byte[] mBox = GetKey(pass, keyLen);
             byte[] output = new byte[data.Length];
             int i = 0, j = 0;
-            for (Int64 offset = 0; offset < data.Length; offset++) {
-                i = (++i) & 0xFF;
-                j = (j + mBox[i]) & 0xFF;
-                byte temp = mBox[i];
-                mBox[i] = mBox[j];
-                mBox[j] = temp;
 
-                byte a = data[offset];
-                byte b = mBox[(mBox[i] + mBox[j]) & 0xFF];
-                output[offset] = (byte)((int)a ^ (int)b);
+            fixed (byte* _mBox = &mBox[0])
+            fixed (byte* _data = &data[0])
+            fixed (byte* _output = &output[0]) {
+                for (Int64 offset = 0; offset < data.Length; offset++) {
+
+                    i = (++i) & 0xFF;
+                    j = (j + *(_mBox + i)) & 0xFF;
+                    byte temp = *(_mBox + i);
+                    *(_mBox + i) = *(_mBox + j);
+                    *(_mBox + j) = temp;
+
+
+                    byte a = *(_data + offset);
+                    byte b = *(_mBox + ((*(_mBox + i) + *(_mBox + j)) & 0xFF));
+                    *(_output + offset) = (byte)((int)a ^ (int)b);
+                }
             }
+
+
+            //for (Int64 offset = 0; offset < data.Length; offset++) {
+            //    i = (++i) & 0xFF;
+            //    j = (j + mBox[i]) & 0xFF;
+            //    byte temp = mBox[i];
+            //    mBox[i] = mBox[j];
+            //    mBox[j] = temp;
+
+            //    byte a = data[offset];
+            //    byte b = mBox[(mBox[i] + mBox[j]) & 0xFF];
+            //    output[offset] = (byte)((int)a ^ (int)b);
+            //}
             return output;
         }
 
 
-        private static byte[] GetKey(byte[] pass, int kLen)
+        private static unsafe byte[] GetKey(byte[] pass, int kLen)
         {
             byte[] mBox = new byte[kLen];
-            for (Int64 i = 0; i < kLen; i++) {
-                mBox[i] = (byte)i;
+            fixed (byte* _mBox = &mBox[0]) {
+                for (Int64 i = 0; i < kLen; i++) {
+                    *(_mBox + i) = (byte)i;
+                }
+                Int64 j = 0;
+                int lengh = pass.Length;
+                fixed (byte* _pass = &pass[0]) {
+                    for (Int64 i = 0; i < kLen; i++) {
+                        j = (j + *(_mBox + i) + *(_pass + (i % lengh))) % kLen;
+                        byte temp = *(_mBox + i);
+                        *(_mBox + i) = *(_mBox + j);
+                        *(_mBox + j) = temp;
+                    }
+                }
             }
-            Int64 j = 0;
-            for (Int64 i = 0; i < kLen; i++) {
-                j = (j + mBox[i] + pass[i % pass.Length]) % kLen;
-                byte temp = mBox[i];
-                mBox[i] = mBox[j];
-                mBox[j] = temp;
-            }
+
+            //for (Int64 i = 0; i < kLen; i++) {
+            //    mBox[i] = (byte)i;
+            //}
+            //Int64 j = 0;
+            //for (Int64 i = 0; i < kLen; i++) {
+            //    j = (j + mBox[i] + pass[i % pass.Length]) % kLen;
+            //    byte temp = mBox[i];
+            //    mBox[i] = mBox[j];
+            //    mBox[j] = temp;
+            //}
             return mBox;
         }
+
     }
 }

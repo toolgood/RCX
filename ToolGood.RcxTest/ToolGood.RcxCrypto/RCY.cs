@@ -252,20 +252,37 @@ namespace ToolGood.RcxCrypto
 
 
 
-        private static byte[] GetKey(byte[] pass, int kLen)
+        private static unsafe byte[] GetKey(byte[] pass, int kLen)
         {
             byte[] mBox = new byte[kLen];
-            for (Int64 i = 0; i < kLen; i++) {
-                mBox[i] = (byte)i;
+            fixed (byte* _mBox = &mBox[0]) {
+                for (Int64 i = 0; i < kLen; i++) {
+                    *(_mBox + i) = (byte)i;
+                }
+                Int64 j = 0;
+                int lengh = pass.Length;
+                fixed (byte* _pass = &pass[0]) {
+                    for (Int64 i = 0; i < kLen; i++) {
+                        j = (j + *(_mBox + i) + *(_pass + (i % lengh))) % kLen;
+                        byte temp = *(_mBox + i);
+                        *(_mBox + i) = *(_mBox + j);
+                        *(_mBox + j) = temp;
+                    }
+                }
             }
-            Int64 j = 0;
-            for (Int64 i = 0; i < kLen; i++) {
-                j = (j + mBox[i] + pass[i % pass.Length]) % kLen;
-                byte temp = mBox[i];
-                mBox[i] = mBox[j];
-                mBox[j] = temp;
-            }
+
+            //for (Int64 i = 0; i < kLen; i++) {
+            //    mBox[i] = (byte)i;
+            //}
+            //Int64 j = 0;
+            //for (Int64 i = 0; i < kLen; i++) {
+            //    j = (j + mBox[i] + pass[i % pass.Length]) % kLen;
+            //    byte temp = mBox[i];
+            //    mBox[i] = mBox[j];
+            //    mBox[j] = temp;
+            //}
             return mBox;
         }
+
     }
 }

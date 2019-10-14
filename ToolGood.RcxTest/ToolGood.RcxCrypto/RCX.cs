@@ -54,7 +54,7 @@ namespace ToolGood.RcxCrypto
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public byte[] Encrypt(string data,OrderType order= OrderType.Asc)
+        public byte[] Encrypt(string data, OrderType order = OrderType.Asc)
         {
             if (string.IsNullOrEmpty(data)) throw new ArgumentNullException("data");
             return encrypt(encoding.GetBytes(data), order);
@@ -68,7 +68,7 @@ namespace ToolGood.RcxCrypto
         public byte[] Encrypt(string data, Encoding encoding, OrderType order = OrderType.Asc)
         {
             if (string.IsNullOrEmpty(data)) throw new ArgumentNullException("data");
-            return encrypt(encoding.GetBytes(data),order);
+            return encrypt(encoding.GetBytes(data), order);
         }
         /// <summary>
         /// Encrypt
@@ -89,7 +89,7 @@ namespace ToolGood.RcxCrypto
             //Buffer.BlockCopy(keybox, 0, mBox, 0, keyLen);
             byte[] output = new byte[data.Length];
             int i = 0, j = 0;
-            if (order== OrderType.Asc) {
+            if (order == OrderType.Asc) {
                 for (int offset = 0; offset < data.Length; offset++) {
                     i = (++i) & 0xFF;
                     j = (j + mBox[i]) & 0xFF;
@@ -220,7 +220,7 @@ namespace ToolGood.RcxCrypto
             if (pass == null) throw new ArgumentNullException("pass");
             if (pass.Length == 0) throw new ArgumentNullException("pass");
 
-            return encrypt(data, pass,order);
+            return encrypt(data, pass, order);
         }
         private static byte[] encrypt(byte[] data, byte[] pass, OrderType order)
         {
@@ -228,7 +228,7 @@ namespace ToolGood.RcxCrypto
             byte[] output = new byte[data.Length];
             int i = 0, j = 0;
 
-            if (order== OrderType.Asc) {
+            if (order == OrderType.Asc) {
                 for (int offset = 0; offset < data.Length; offset++) {
                     i = (++i) & 0xFF;
                     j = (j + mBox[i]) & 0xFF;
@@ -262,19 +262,35 @@ namespace ToolGood.RcxCrypto
 
 
 
-        private static byte[] GetKey(byte[] pass, int kLen)
+        private static unsafe byte[] GetKey(byte[] pass, int kLen)
         {
             byte[] mBox = new byte[kLen];
-            for (Int64 i = 0; i < kLen; i++) {
-                mBox[i] = (byte)i;
+            fixed (byte* _mBox = &mBox[0]) {
+                for (Int64 i = 0; i < kLen; i++) {
+                    *(_mBox + i) = (byte)i;
+                }
+                Int64 j = 0;
+                int lengh = pass.Length;
+                fixed (byte* _pass = &pass[0]) {
+                    for (Int64 i = 0; i < kLen; i++) {
+                        j = (j + *(_mBox + i) + *(_pass + (i % lengh))) % kLen;
+                        byte temp = *(_mBox + i);
+                        *(_mBox + i) = *(_mBox + j);
+                        *(_mBox + j) = temp;
+                    }
+                }
             }
-            Int64 j = 0;
-            for (Int64 i = 0; i < kLen; i++) {
-                j = (j + mBox[i] + pass[i % pass.Length]) % kLen;
-                byte temp = mBox[i];
-                mBox[i] = mBox[j];
-                mBox[j] = temp;
-            }
+
+            //for (Int64 i = 0; i < kLen; i++) {
+            //    mBox[i] = (byte)i;
+            //}
+            //Int64 j = 0;
+            //for (Int64 i = 0; i < kLen; i++) {
+            //    j = (j + mBox[i] + pass[i % pass.Length]) % kLen;
+            //    byte temp = mBox[i];
+            //    mBox[i] = mBox[j];
+            //    mBox[j] = temp;
+            //}
             return mBox;
         }
     }
