@@ -252,3 +252,8 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+/ToolGood.RcxTest/ToolGood.RcxCrypto/obj
+/ToolGood.RcxTest/ToolGood.RcxTest/bin
+/ToolGood.RcxTest/ToolGood.RcxTest/obj
+/ToolGood.RcxTest/RcxJs/obj
+/ToolGood.RcxTest/RcxJs/bin
