@@ -14,17 +14,19 @@
     <PackageId>ToolGood.RcxCrypto</PackageId>
     <PackageTags>RC4;RCX;RCY;RC4-Algorithm;RCX-Algorithm;RCY-Algorithm;ThreeRCX;ThreeRCX-Algorithm;ThreeRCY-Algorithm</PackageTags>
     <PackageProjectUrl>https://github.com/toolgood/RCX</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/toolgood/RCX/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/toolgood/RCX</RepositoryUrl>
     <RootNamespace>ToolGood.RcxCrypto</RootNamespace>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <FileVersion>1.3.0.0</FileVersion>
-    <Version>1.3.0.0</Version>
+    <FileVersion>1.4.0.0</FileVersion>
+    <Version>1.4.0.0</Version>
     <PackageReleaseNotes></PackageReleaseNotes>
     <DelaySign>false</DelaySign>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyVersion>1.4.0.0</AssemblyVersion>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
 
   </PropertyGroup>
 
@@ -36,6 +38,13 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">

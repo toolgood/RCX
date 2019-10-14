@@ -1,6 +1,0 @@
-F:\git\RCX\ToolGood.RcxTest\ToolGood.RcxTest\bin\Debug\ToolGood.RcxTest.exe
-F:\git\RCX\ToolGood.RcxTest\ToolGood.RcxTest\bin\Debug\ToolGood.RcxTest.pdb
-F:\git\RCX\ToolGood.RcxTest\ToolGood.RcxTest\obj\Debug\ToolGood.RcxTest.csprojResolveAssemblyReference.cache
-F:\git\RCX\ToolGood.RcxTest\ToolGood.RcxTest\obj\Debug\ToolGood.RcxTest.csproj.CoreCompileInputs.cache
-F:\git\RCX\ToolGood.RcxTest\ToolGood.RcxTest\obj\Debug\ToolGood.RcxTest.exe
-F:\git\RCX\ToolGood.RcxTest\ToolGood.RcxTest\obj\Debug\ToolGood.RcxTest.pdb
